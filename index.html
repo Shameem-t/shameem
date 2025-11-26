@@ -13,11 +13,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-    <!-- FontAwesome Icons (for UI icons) -->
+    <link rel="icon" type="image/png" href="fav.png">
+    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-        <link rel="icon" type="image/png" href="fav.png">
-    <!-- Devicon (for Tech Logos like Flutter, Python, Django) -->
+    
+    <!-- Devicon (Tech Logos) -->
     <link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
 </head>
 <body>
@@ -26,7 +26,7 @@
     <div class="ambient-light-1"></div>
     <div class="ambient-light-2"></div>
 
-    <!-- FIXED HEADER (Navigation) -->
+    <!-- FIXED HEADER -->
     <nav class="fixed-header">
         <div class="nav-container">
             <a href="#" class="logo">Sameem<span class="dot-accent">.</span></a>
@@ -68,7 +68,7 @@
                         <span class="label">Major Projects</span>
                     </div>
                     <div class="stat">
-                        <span class="num">Intern</span>
+                        <span class="num" style="">Intern</span>
                         <span class="label">TechnoDot</span>
                     </div>
                 </div>
@@ -77,9 +77,9 @@
             <!-- Hero Visual (Your Photo) -->
             <div class="hero-visual">
                 <div class="visual-card photo-card">
-                    <!-- Make sure your image is named 'profile.jpg' -->
                     <img src="sammeem.jpeg" alt="Sameem T" class="profile-img">
-
+                    
+                    <!-- Floating Badges -->
                 </div>
             </div>
         </section>
@@ -108,7 +108,7 @@
                     <h3>Django</h3>
                 </div>
 
-                <!-- DRF (Using Server Icon) -->
+                <!-- DRF -->
                 <div class="skill-box">
                     <i class="fa-solid fa-server" style="color: #ff9f1c;"></i>
                     <h3>DRF</h3>
@@ -199,7 +199,7 @@
             </div>
         </section>
 
-        <!-- Contact Section / Footer -->
+        <!-- Contact Section -->
         <section id="contact" class="contact-section">
             <div class="contact-container">
                 
@@ -258,10 +258,43 @@
 
     </main>
 
-    <!-- Script to Handle Active Navigation State -->
+    <!-- JS: Handles Mobile Menu & Scroll Spy -->
     <script>
+        // --- Mobile Menu Toggle Logic ---
+        const menuIcon = document.querySelector(".mobile-menu-icon");
+        const navLinksWrapper = document.querySelector(".nav-links");
+        const icon = menuIcon.querySelector("i");
+        const links = document.querySelectorAll(".nav-links li a");
+
+        menuIcon.addEventListener("click", () => {
+            // 1. Toggle the active class on the nav menu (Slide in/out)
+            navLinksWrapper.classList.toggle("active");
+            
+            // 2. Switch Icon (Hamburger <-> X) & Lock Scroll
+            if (navLinksWrapper.classList.contains("active")) {
+                icon.classList.remove("fa-bars");
+                icon.classList.add("fa-xmark");
+                document.body.style.overflow = "hidden"; // Prevent background scrolling
+            } else {
+                icon.classList.add("fa-bars");
+                icon.classList.remove("fa-xmark");
+                document.body.style.overflow = "auto";
+            }
+        });
+
+        // 3. Close menu when clicking a link
+        links.forEach(link => {
+            link.addEventListener("click", () => {
+                navLinksWrapper.classList.remove("active");
+                icon.classList.add("fa-bars");
+                icon.classList.remove("fa-xmark");
+                document.body.style.overflow = "auto";
+            });
+        });
+
+        // --- Scroll Spy (Highlight Active Link) ---
         const sections = document.querySelectorAll("section");
-        const navLi = document.querySelectorAll(".nav-links li a");
+        const navItems = document.querySelectorAll(".nav-links li a");
 
         window.onscroll = () => {
             var current = "";
@@ -272,7 +305,7 @@
                 }
             });
 
-            navLi.forEach((a) => {
+            navItems.forEach((a) => {
                 a.classList.remove("active");
                 if (a.getAttribute('href').includes(current) && current !== "") {
                      a.classList.add("active");

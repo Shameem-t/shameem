@@ -3,7 +3,7 @@
     --bg-dark: #050505;
     --card-bg: #121212;
     --border-color: rgba(255, 255, 255, 0.08);
-    --primary: #ff9f1c; /* Warm Orange/Yellow Glow matching the scooter */
+    --primary: #ff9f1c; /* Warm Orange Glow matching the scooter */
     --text-main: #ffffff;
     --text-muted: #a1a1aa;
     --font-main: 'Inter', sans-serif;
@@ -31,7 +31,7 @@ body {
     left: -10%;
     width: 600px;
     height: 600px;
-    background: radial-gradient(circle, rgba(255, 159, 28, 0.15) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(255, 159, 28, 0.12) 0%, transparent 70%);
     z-index: -1;
     filter: blur(100px);
     pointer-events: none;
@@ -61,6 +61,7 @@ body {
     border-bottom: 1px solid var(--border-color);
     z-index: 1000;
     padding: 15px 0;
+    transition: 0.3s;
 }
 
 .nav-container {
@@ -204,7 +205,7 @@ h1 {
 .stat .num { font-size: 1.8rem; font-weight: 700; color: white; }
 .stat .label { font-size: 0.85rem; color: var(--text-muted); }
 
-/* --- Hero Visual (Photo Card) --- */
+/* Hero Visual (Photo Card) */
 .hero-visual { position: relative; }
 
 .visual-card {
@@ -215,13 +216,12 @@ h1 {
     transition: 0.3s ease;
 }
 
-/* Specific styling for the Photo Card */
 .photo-card {
     padding: 0;
     overflow: hidden;
     background: transparent;
-    border: 2px solid rgba(255, 159, 28, 0.3); /* Subtle Orange Border */
-    box-shadow: 0 0 40px rgba(255, 159, 28, 0.15); /* Orange Glow */
+    border: 2px solid rgba(255, 159, 28, 0.3);
+    box-shadow: 0 0 40px rgba(255, 159, 28, 0.15);
 }
 
 .profile-img {
@@ -243,7 +243,6 @@ h1 {
     border-color: var(--primary);
 }
 
-/* Floating Badges */
 .floating-badge {
     position: absolute;
     padding: 10px 18px;
@@ -524,26 +523,82 @@ h1 {
         text-align: center;
         padding-top: 40px;
     }
-    
     .hero-text { margin-bottom: 60px; }
     .hero-stats { justify-content: center; }
-    
     .visual-card { width: 300px; height: 380px; margin: 0 auto; }
-    
     .contact-container { grid-template-columns: 1fr; gap: 50px; }
-    
     h1 { font-size: 3.5rem; }
     .contact-info h2 { font-size: 2.5rem; }
 }
 
 @media (max-width: 768px) {
-    .nav-links, .btn-cv { display: none; }
-    .mobile-menu-icon { display: block; }
+    /* Adjust Header */
+    .fixed-header { padding: 15px 0; }
+    .btn-cv { display: none; } 
     
+    /* Mobile Menu Icon (Z-index ensures it sits ON TOP of the glass) */
+    .mobile-menu-icon {
+        display: block;
+        font-size: 1.5rem;
+        color: white;
+        cursor: pointer;
+        z-index: 1001; 
+        position: relative;
+    }
+
+    /* --- SIDEBAR GLASS MENU --- */
+    .nav-links {
+        position: fixed;
+        top: 0;
+        right: 0; /* Anchor to the RIGHT side */
+        left: auto; /* Ignore left alignment */
+        
+        /* Sidebar Width Configuration */
+        width: 75%; 
+        max-width: 320px; /* Don't get too wide on tablets */
+        height: 100vh;
+        
+        /* GLASS EFFECT */
+        background: rgba(20, 20, 20, 0.6); /* Semi-transparent dark bg */
+        backdrop-filter: blur(25px);      /* The Blur Magic */
+        -webkit-backdrop-filter: blur(25px); /* Safari support */
+        border-left: 1px solid rgba(255, 255, 255, 0.1); /* Glass Edge */
+        box-shadow: -10px 0 40px rgba(0,0,0,0.6); /* Shadow to separate from content */
+        
+        /* Layout */
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 35px;
+        
+        /* Animation: Slide from Right */
+        transform: translateX(100%); /* Hidden (pushed to right) */
+        transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Smooth bounce effect */
+        z-index: 1000;
+    }
+
+    /* Active State: Slide In */
+    .nav-links.active {
+        transform: translateX(0); /* Visible */
+    }
+
+    .nav-links a {
+        font-size: 1.4rem;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.8);
+        width: 100%;
+        text-align: center;
+    }
+    
+    .nav-links a:hover, .nav-links a.active {
+        color: var(--primary);
+        background: rgba(255, 255, 255, 0.05); /* Highlight active link area */
+        padding: 10px 0;
+    }
+    
+    /* Other Mobile Adjustments */
     .skills-grid { grid-template-columns: repeat(2, 1fr); }
-    
     h1 { font-size: 3rem; }
-    
     .project-card { height: auto; }
     .p-icon { display: none; }
 }
